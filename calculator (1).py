@@ -1,4 +1,4 @@
-#เมื่อรันเสร็จจะมีไฟล์ calculator เกิดขึ้นมา
+# calculator.py
 import streamlit as st
 
 def get_number_input(label):
@@ -9,24 +9,35 @@ def get_operator_input(label):
     return st.selectbox(label, valid_operators)
 
 def calculate(num1, num2, operator):
-    #copy โค้ดฟังก์ชั่น calculate มาใส่
+    # ฟังก์ชันคำนวณหลัก
+    if operator == '+':
+        return num1 + num2
+    elif operator == '-':
+        return num1 - num2
+    elif operator == '*':
+        return num1 * num2
+    elif operator == '/':
+        if num2 == 0:
+            st.error("❗ ไม่สามารถหารด้วย 0 ได้")
+            return None
+        return num1 / num2
+    elif operator == '%':
+        if num2 == 0:
+            st.error("❗ ไม่สามารถหารด้วย 0 ได้")
+            return None
+        return num1 % num2
+    else:
+        st.error(" ตัวดำเนินการไม่ถูกต้อง")
+        return None
 
 
-
-
-
-
-
-
-
+# ส่วนแสดงผล UI
 st.title('My Calculator')
 
-# Get inputs from the user
 num1 = get_number_input("ป้อนตัวเลขแรก:")
 num2 = get_number_input("ป้อนตัวเลขที่สอง:")
 operator = get_operator_input("เลือกตัวดำเนินการ:")
 
-# Perform calculation when the button is clicked
 if st.button('คำนวณ'):
     result = calculate(num1, num2, operator)
     if result is not None:
